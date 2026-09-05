@@ -1,0 +1,163 @@
+@model IEnumerable<ITHelpDesk.Models.HdTicket>
+
+@{
+    ViewData["Title"] = "Help Desk Tickets";
+}
+
+<div class="ticket-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Help Desk Tickets</h1>
+            <p>Manage and monitor all technical support requests.</p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Create Ticket
+        </a>
+    </div>
+
+    <div class="ticket-card">
+
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <h4>No tickets found</h4>
+                <p>Create your first help-desk ticket.</p>
+
+                <a asp-action="Create"
+                   class="btn btn-primary">
+                    Create Ticket
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table ticket-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Employee</th>
+                            <th>Created</th>
+                            <th>Resolved</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string priorityClass =
+                                item.Priority switch
+                                {
+                                    "Critical" => "priority-critical",
+                                    "High" => "priority-high",
+                                    "Medium" => "priority-medium",
+                                    _ => "priority-low"
+                                };
+
+                            string statusClass =
+                                item.Status switch
+                                {
+                                    "Resolved" => "status-resolved",
+                                    "Closed" => "status-closed",
+                                    "In Progress" => "status-progress",
+                                    _ => "status-open"
+                                };
+
+                            <tr>
+                                <td class="ticket-information">
+                                    <div class="ticket-title">
+                                        @item.Title
+                                    </div>
+
+                                    <div class="ticket-description"
+                                         title="@item.Description">
+                                        @item.Description
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="category-text">
+                                        @item.Category
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="ticket-badge @priorityClass">
+                                        @item.Priority
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="ticket-badge @statusClass">
+                                        @item.Status
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="employee-name">
+                                        @(item.Employee?.EmployeeName
+                                            ?? "Not assigned")
+                                    </div>
+
+                                    <div class="employee-id">
+                                        ID: @item.EmployeeId
+                                    </div>
+                                </td>
+
+                                <td class="date-column">
+                                    @item.CreatedDate.ToString(
+                                        "dd MMM yyyy")
+
+                                    <small>
+                                        @item.CreatedDate.ToString(
+                                            "hh:mm tt")
+                                    </small>
+                                </td>
+
+                                <td class="date-column">
+                                    @if (item.ResolvedDate.HasValue)
+                                    {
+                                        @item.ResolvedDate.Value.ToString(
+                                            "dd MMM yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span class="not-available">—</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <div class="action-buttons">
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.TicketId"
+                                           class="btn btn-sm btn-outline-info">
+                                            View
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.TicketId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.TicketId"
+                                           class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
