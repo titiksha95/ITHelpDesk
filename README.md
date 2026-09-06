@@ -43,7 +43,7 @@ The project uses the **Entity Framework Core Database-First approach**, where th
 
 ## Database Tables
 
-The application uses the following tables in the `Trainee_DB` database:
+The application uses the following tables in the database:
 
 * `HD_Departments`
 * `HD_Employees`
@@ -88,7 +88,7 @@ Add your SQL Server connection string to `appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "HelpDeskConnection": "Server=YOUR_SERVER_NAME;Database=Trainee_DB;Trusted_Connection=True;TrustServerCertificate=True;"
+    "HelpDeskConnection": "Server=YOUR_SERVER_NAME;Database=Your_DB;Trusted_Connection=True;TrustServerCertificate=True;"
   }
 }
 ```
