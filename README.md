@@ -126,21 +126,7 @@ ITHelpDesk
 └── Program.cs
 ```
 
-## Concepts Demonstrated
 
-* MVC architecture
-* Entity Framework Core
-* Database-First development
-* Object-relational mapping
-* Dependency injection
-* CRUD operations
-* Asynchronous database operations
-* Table relationships
-* Model binding
-* Server-side and client-side validation
-* External API integration
-* Browser geolocation
-* Responsive web design
 
 ## Author
 
